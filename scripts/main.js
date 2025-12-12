@@ -138,6 +138,53 @@ let _fin = false;
 let _over = false;
 let teclado = pregunta.map(x => x.letra).sort(() => Math.random() - 0.5);
 teclado = teclado.map(x => ({ letra: x, usado: false }));
+
+// Variables de audio
+const audioPlayer = document.getElementById('background-music');
+let musicPlaying = false;
+
+// Configurar volumen inicial
+audioPlayer.volume = 0.6; // 60% de volumen
+
+function toggleMusic() {
+    const musicButton = document.querySelector('.music-control');
+    const musicIcon = document.getElementById('music-icon');
+
+    if (!musicPlaying) {
+        // Reproducir música
+        audioPlayer.play().then(() => {
+            musicPlaying = true;
+            musicIcon.textContent = '⏸️';
+            musicButton.classList.add('playing');
+
+            // Mostrar control de volumen
+            document.querySelector('.audio-control').style.display = 'flex';
+        }).catch(error => {
+            console.error('Error al reproducir audio:', error);
+            alert('No se pudo reproducir el audio. Asegúrate de tener el archivo de música en la carpeta ./audio/');
+        });
+    } else {
+        // Pausar música
+        audioPlayer.pause();
+        musicPlaying = false;
+        musicIcon.textContent = '▶️';
+        musicButton.classList.remove('playing');
+    }
+}
+
+function toggleAudio() {
+    const icon = document.getElementById('audio-icon');
+
+    if (audioPlayer.volume > 0) {
+        audioPlayer.volume = 0;
+        icon.textContent = '🔇';
+    } else {
+        audioPlayer.volume = 0.6;
+        icon.textContent = '🔊';
+    }
+}
+
+// Configuración del canvas de confeti
 const canvas = document.getElementById('confetti-canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -145,6 +192,8 @@ canvas.height = window.innerHeight;
 
 let confettiPieces = [];
 let animationId = null;
+
+// Clase para las piezas de confeti
 class Confetti {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -171,6 +220,8 @@ class Confetti {
         this.y += this.speedY;
         this.x += this.speedX;
         this.rotation += this.rotationSpeed;
+
+        // Añadir efecto de gravedad
         this.speedY += 0.1;
     }
 
@@ -219,9 +270,12 @@ function launchConfetti() {
     confettiPieces = [];
     createConfetti();
     animateConfetti();
+
+    // Cambiar el título
     $('.title').text('¡Felicidades! 🎉').addClass('success');
 }
 
+// Ajustar canvas al redimensionar la ventana
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -279,6 +333,7 @@ function fin() {
     }
     if (val) {
         _fin = true;
+        // ¡Lanzar confeti cuando se completa!
         setTimeout(() => {
             launchConfetti();
         }, 300);

@@ -15,6 +15,84 @@
     z-index: 9999;
 }
 
+/* Botón de música en la esquina superior izquierda */
+.music-control {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(28, 39, 71, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    border: 3px solid rgba(87, 168, 224, 0.5);
+}
+
+.music-control:hover {
+    transform: scale(1.15);
+    background-color: rgba(87, 168, 224, 0.95);
+    border-color: rgba(87, 168, 224, 1);
+    box-shadow: 0px 6px 25px rgba(87, 168, 224, 0.5);
+}
+
+.music-control:active {
+    transform: scale(1.05);
+}
+
+.music-control span {
+    font-size: 28px;
+}
+
+.music-control.playing {
+    background-color: rgba(69, 173, 104, 0.95);
+    border-color: rgba(69, 173, 104, 0.8);
+    animation: pulse-music 2s ease-in-out infinite;
+}
+
+@keyframes pulse-music {
+
+    0%,
+    100% {
+        box-shadow: 0px 4px 20px rgba(69, 173, 104, 0.4);
+    }
+
+    50% {
+        box-shadow: 0px 4px 30px rgba(69, 173, 104, 0.8);
+    }
+}
+
+.audio-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(28, 39, 71, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.audio-control:hover {
+    transform: scale(1.1);
+    background-color: rgba(87, 168, 224, 0.9);
+}
+
+.audio-control span {
+    font-size: 24px;
+}
+
 .content {
     display: flex;
     justify-content: center;
